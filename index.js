@@ -128,8 +128,18 @@ async function run() {
         res.send(result);
     });
 
+//=================================================
+    //                Review API
+    //=================================================
 
-    
+    // 1. CREATE Review
+    app.post('/reviews', async (req, res) => {
+        const newReview = req.body;
+        newReview.createdAt = new Date();
+        const result = await reviewCollection.insertOne(newReview);
+        res.send(result);
+    });
+
     
 
 // Start Server
