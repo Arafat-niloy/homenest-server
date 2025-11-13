@@ -98,6 +98,30 @@ async function run() {
         res.send(property);
     });
 
+    // 6. UPDATE Property
+    app.put('/properties/:id', async (req, res) => {
+        const id = req.params.id;
+        const updatedData = req.body;
+
+        const filter = { _id: new ObjectId(id) };
+        const updateDoc = {
+            $set: {
+                propertyName: updatedData.propertyName,
+                description: updatedData.description,
+                category: updatedData.category,
+                price: updatedData.price,
+                location: updatedData.location,
+                imageLink: updatedData.imageLink,
+            },
+        };
+
+        const result = await propertyCollection.updateOne(filter, updateDoc);
+        res.send(result);
+    });
+
+    
+
+
     
     //=================================================
     //                Review API
