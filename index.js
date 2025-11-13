@@ -11,7 +11,7 @@ const corsOptions = {
   origin: [
     'http://localhost:5173',
     'http://localhost:5174',
-    'https://cute-kelpie-fadb6d.netlify.app'
+    'https://stellular-squirrel-eecba7.netlify.app'
   ],
   optionsSuccessStatus: 200,
 };
