@@ -140,6 +140,33 @@ async function run() {
         res.send(result);
     });
 
+    // 2. READ (All Reviews for a Property)
+    app.get('/reviews/:propertyId', async (req, res) => {
+        const propertyId = req.params.propertyId;
+        const query = { propertyId: propertyId };
+        const reviews = await reviewCollection.find(query).sort({ createdAt: -1 }).toArray();
+        res.send(reviews);
+    });
+
+    // 3. READ (Reviews by User Email)
+    app.get('/reviews/my/:email', async (req, res) => {
+        const email = req.params.email;
+        const query = { reviewerEmail: email };
+        const myReviews = await reviewCollection.find(query).toArray();
+        res.send(myReviews);
+    });
+
+  } finally {
+    // await client.close();
+  }
+}
+
+run().catch(console.dir);
+
+
+
+
+    
     
 
 // Start Server
