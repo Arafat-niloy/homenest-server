@@ -168,12 +168,7 @@ app.get('/', (req, res) => {
     res.send('HomeNest Server is running!');
 });
 
-// // property details/propertyName
-// app.get("/properties/slug/:slug", async (req, res) => {
-//   const slug = req.params.slug;
-//   const property = await Property.findOne({ slug });
-//   res.send(property);
-// });
+
 
 
     
