@@ -119,58 +119,18 @@ async function run() {
         res.send(result);
     });
 
-    
+    // 7. DELETE Property
+    app.delete('/properties/:id', async (req, res) => {
+        const id = req.params.id;
 
-
-    
-    //=================================================
-    //                Review API
-    //=================================================
-
-    // 1. CREATE Review
-    app.post('/reviews', async (req, res) => {
-        const newReview = req.body;
-        newReview.createdAt = new Date();
-        const result = await reviewCollection.insertOne(newReview);
+        const query = { _id: new ObjectId(id) };
+        const result = await propertyCollection.deleteOne(query);
         res.send(result);
     });
 
-    // 2. READ (All Reviews for a Property)
-    app.get('/reviews/:propertyId', async (req, res) => {
-        const propertyId = req.params.propertyId;
-        const query = { propertyId: propertyId };
-        const reviews = await reviewCollection.find(query).sort({ createdAt: -1 }).toArray();
-        res.send(reviews);
-    });
 
-    // 3. READ (Reviews by User Email)
-    app.get('/reviews/my/:email', async (req, res) => {
-        const email = req.params.email;
-        const query = { reviewerEmail: email };
-        const myReviews = await reviewCollection.find(query).toArray();
-        res.send(myReviews);
-    });
-
-  } finally {
-    // await client.close();
-  }
-}
-
-run().catch(console.dir);
-
-// Root Route
-app.get('/', (req, res) => {
-    res.send('HomeNest Server is running!');
-});
-
-// // property details/propertyName
-// app.get("/properties/slug/:slug", async (req, res) => {
-//   const slug = req.params.slug;
-//   const property = await Property.findOne({ slug });
-//   res.send(property);
-// });
-
-
+    
+    
 
 // Start Server
 app.listen(port, () => {
