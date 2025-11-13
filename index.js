@@ -6,16 +6,15 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-// --- CORS Configuration ---
+// CORS Configuration
 const corsOptions = {
   origin: [
     'http://localhost:5173',
-    'https://warm-llama-c3da04.netlify.app/'
+    'https://my-homenest-by-arafat.netlify.app'
   ],
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
-// ---------------------------
 
 app.use(express.json());
 
@@ -27,23 +26,19 @@ const client = new MongoClient(uri, {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
-  }
+  },
 });
 
-// Collections
-const database = client.db("homeNestDB");
-const propertyCollection = database.collection("properties");
-const reviewCollection = database.collection("reviews");
+const database = client.db('homeNestDB');
+const propertyCollection = database.collection('properties');
+const reviewCollection = database.collection('reviews');
 
 async function run() {
   try {
-    console.log("Pinged your deployment. Successfully connected to MongoDB!");
+    // await client.connect();
+    console.log('Pinged your deployment. Successfully connected to MongoDB!');
 
-    // ===============================
-    //          Property API
-    // ===============================
-
-    // Create Property
+    // Property APIs
     app.post('/properties', async (req, res) => {
       const newProperty = req.body;
       newProperty.createdAt = new Date();
@@ -51,7 +46,6 @@ async function run() {
       res.send(result);
     });
 
-    // Get All Properties
     app.get('/properties', async (req, res) => {
       let query = {};
       let sortOptions = {};
@@ -70,7 +64,6 @@ async function run() {
       res.send(properties);
     });
 
-    // Get Featured Properties
     app.get('/properties/featured', async (req, res) => {
       const featuredProperties = await propertyCollection
         .find()
@@ -80,11 +73,10 @@ async function run() {
       res.send(featuredProperties);
     });
 
-    // Get Properties by User Email
     app.get('/properties/my', async (req, res) => {
       const email = req.query.email;
       if (!email) {
-        return res.status(400).send({ error: "Email query is required" });
+        return res.status(400).send({ error: 'Email query is required' });
       }
 
       const query = { userEmail: email };
@@ -92,12 +84,11 @@ async function run() {
       res.send(myProperties);
     });
 
-    // Get Single Property
     app.get('/properties/:id', async (req, res) => {
       const id = req.params.id;
 
       if (!ObjectId.isValid(id)) {
-        return res.status(400).send({ error: "Invalid ID format" });
+        return res.status(400).send({ error: 'Invalid ID format' });
       }
 
       const query = { _id: new ObjectId(id) };
@@ -105,7 +96,6 @@ async function run() {
       res.send(property);
     });
 
-    // Update Property
     app.put('/properties/:id', async (req, res) => {
       const id = req.params.id;
       const updatedData = req.body;
@@ -126,7 +116,6 @@ async function run() {
       res.send(result);
     });
 
-    // Delete Property
     app.delete('/properties/:id', async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
@@ -134,11 +123,7 @@ async function run() {
       res.send(result);
     });
 
-    // ===============================
-    //           Review API
-    // ===============================
-
-    // Create Review
+    // Review APIs
     app.post('/reviews', async (req, res) => {
       const newReview = req.body;
       newReview.createdAt = new Date();
@@ -146,7 +131,6 @@ async function run() {
       res.send(result);
     });
 
-    // Get Reviews for a Property
     app.get('/reviews/:propertyId', async (req, res) => {
       const propertyId = req.params.propertyId;
       const query = { propertyId: propertyId };
@@ -154,7 +138,6 @@ async function run() {
       res.send(reviews);
     });
 
-    // Get Reviews by User Email
     app.get('/reviews/my/:email', async (req, res) => {
       const email = req.params.email;
       const query = { reviewerEmail: email };
