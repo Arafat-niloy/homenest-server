@@ -10,7 +10,7 @@ const port = process.env.PORT || 5000;
 const corsOptions = {
   origin: [
     'http://localhost:5173',
-    'https://your-netlify-site-name.netlify.app'
+    'https://warm-llama-c3da04.netlify.app/'
   ],
   optionsSuccessStatus: 200
 };
