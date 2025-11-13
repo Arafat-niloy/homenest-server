@@ -10,7 +10,7 @@ const port = process.env.PORT || 5000;
 const corsOptions = {
   origin: [
     'http://localhost:5173',
-    'https://my-homenest-by-arafat.netlify.app'
+    'https://aesthetic-strudel-016c0c.netlify.app/'
   ],
   optionsSuccessStatus: 200,
 };
