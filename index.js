@@ -9,8 +9,8 @@ const port = process.env.PORT || 5000;
 // CORS Configuration
 const corsOptions = {
   origin: [
-    'http://localhost:5173',
-    'https://aesthetic-strudel-016c0c.netlify.app/'
+    'http://localhost:5176',
+    'https://reliable-daffodil-72de8f.netlify.app/'
   ],
   optionsSuccessStatus: 200,
 };
